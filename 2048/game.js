@@ -37,12 +37,9 @@ function logKey(e) {
         for (let j=0; j < 4; j++){
             if(grid[i][j] != ""){
                 var tmp = grid[i][j];
-                if(totalVal==0 || totalVal==tmp){
-                    totalVal = totalVal+tmp;
-                    unsetDie(i+""+j);
-                }
+                totalVal = totalVal+tmp;
                 unsetDie(i+""+j);
-            }
+                }
         }
         setDie(i+""+3,totalVal);  
     }
@@ -54,11 +51,8 @@ function logKey(e) {
         for (let j=0; j < 4; j++){
             if(grid[i][j] != ""){
                 var tmp = grid[i][j];
-                if(totalVal==0 || totalVal==tmp){
-                    totalVal = totalVal+tmp;
-                    unsetDie(i+""+j);
-                }
-                
+                totalVal = totalVal+tmp;
+                unsetDie(i+""+j);
             }
         }
         setDie(i+""+0,totalVal);        
@@ -71,11 +65,8 @@ function logKey(e) {
         for (let j=0; j < 4; j++){
             if(grid[j][i] != ""){
                 var tmp = grid[j][i];
-                if(totalVal==0 || totalVal==tmp){
-                    totalVal = totalVal+tmp;
-                    unsetDie(i+""+j);
-                }
-                unsetDie(i+""+j);
+                totalVal = totalVal+tmp;
+                unsetDie(j+""+i);
             }
         }
         setDie(3+""+i,totalVal);
@@ -89,11 +80,8 @@ function logKey(e) {
         for (let j=0; j < 4; j++){
             if(grid[j][i] != ""){
                 var tmp = grid[j][i];
-                if(totalVal==0 || totalVal==tmp){
-                    totalVal = totalVal+tmp;
-                    unsetDie(i+""+j);
-                }
-                unsetDie(i+""+j);
+                totalVal = totalVal+tmp;
+                unsetDie(j+""+i);
             }
         }
         setDie(0+""+i,totalVal); 
