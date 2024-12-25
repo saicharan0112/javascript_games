@@ -27,33 +27,69 @@ body{
     display: flex;
 }
 
-.tile0, .tile1, .tile2 {
-    border-width: 0.5px;
+button {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    color: #000000;
+    border-color: rgb(0, 0, 0);
+}
+
+
+.tile0 {
+    border-width: 2px;
     border-color: blue;
+    border-style: inset;
 }
 
-.tile3, .tile4, .tile5 {
-    border-width: 0.5px;
+.tile1 {
+    border-width: 2px;
     border-color: red;
+    border-style: inset;
 }
 
 
-.tile6, .tile7, .tile8 {
-    border-width: 0.5px;
+.tile2 {
+    border-width: 2px;
     border-color: green;
+}
+
+.tile3 {
+    border-width: 2px;
+    border-color: rgb(100, 100, 173);
+}
+
+.tile4 {
+    border-width: 2px;
+    border-color: rgb(85, 64, 64);
+}
+
+
+.tile5 {
+    border-width: 2px;;
+    border-color: rgb(197, 255, 197);
+}
+
+.tile6 {
+    border-width: 2px;
+    border-color: rgb(32, 32, 80);
+}
+
+.tile7 {
+    border-width: 2px;
+    border-color: rgb(216, 203, 65);
+}
+
+
+.tile8 {
+    border-width: 2px;
+    border-color: rgb(201, 119, 11);
 }
 
 button:disabled{
     background-color: rgb(255, 255, 255);
 }
 
-button {
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    color: #000000;
-    border-color: rgb(0, 0, 0);
-}
 
 #reset {
     width: 100px;
