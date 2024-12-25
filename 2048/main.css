@@ -5,16 +5,18 @@ body{
 #heading {
     margin-left: 170px;
     padding-bottom: 20px;
+    font-size: 40px;
 }
 
 #game_field {
     background-color: rgb(192, 206, 206);
     margin-left: 35%;
     margin-right: 32%;
-    margin-top: 8%;
+    margin-top: 5%;
     padding-top: 5px;
     padding-bottom: 20px;
     padding-left: 90px;
+    border-radius: 15px;
 }
 
 #user_btns {
@@ -39,7 +41,14 @@ button {
 }
 
 #response {
-    margin-left: 120px;
+    margin-left: 140px;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#score {
+    margin-left: 140px;
     padding-top: 10px;
     font-weight: bold;
     font-size: 20px;
