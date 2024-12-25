@@ -33,6 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
             for (let col = 0; col < boardSize; col++) {
                 const tile = document.getElementById(`${row}${col}`);
                 tile.textContent = board[row][col] === 0 ? "" : board[row][col];
+                if (board[row][col] === 0) {
+                    tile.style.backgroundColor = "hsl(0, 0%, 76%)";
+                } else {
+                    lightness = 80 - Math.log2(board[row][col]) * 5;
+                    tile.style.backgroundColor = `hsl(215, 25%, ${Math.max(lightness, 30)}%)`;
+                }
                 tile.className = `tile ${board[row][col] ? `tile-${board[row][col]}` : ""}`;
             }
         }
