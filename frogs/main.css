@@ -24,14 +24,12 @@ body{
 }
 
 #board {
-    background-color: rgb(165, 180, 180);
     border-color: black;
     border-width: 3px;
     border-style: solid;
-    width: 650;
+    width: 650px;
     height: 100px;
     display: inline-flex;
-
 }
 
 .frogs {
@@ -39,8 +37,9 @@ body{
     padding-right: 15px;
     padding-top: 8px;
     border-style: hidden;
-    background-color:rgb(165, 180, 180);
+    background-color:rgb(255, 255, 255);
     font-size: 20px;
+    color: rgb(255, 255, 255);
 }
 
 #response {
