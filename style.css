@@ -12,8 +12,8 @@ body{
 
 .games {
     display: inline-flex;
-    margin-left: 12%;
-    margin-right: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
     text-align: center;
     border: solid 3px black;
     font-size: 21px;
