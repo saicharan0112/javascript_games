@@ -95,7 +95,7 @@ body {
     height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
-    padding: 15px;
+    /* padding: 15px; */
 }
 
 #manual-window {

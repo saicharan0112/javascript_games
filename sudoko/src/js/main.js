@@ -1,13 +1,3 @@
-// --------------------------------------- PWA!!! -------------------------------------------------------------- //
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-        navigator.serviceWorker
-            .register("serviceWorker.js")
-            .then(res => console.log("service worker registered"))
-            .catch(err => console.log("service worker not registered", err))
-    })
-}
-
 // ---------------------------- Global State Storage (kinda!!) ---------------------------------------------------- //
 let initialNumbers = Array.from({length: 9}, () => Array(9).fill(0));
 let otherNumbers = Array.from({length: 9}, () => Array(9).fill(0));
@@ -46,28 +36,6 @@ function printSolution(){
     console.table(solution)
 }
 
-// -------------------------------------------- Cookie ----------------------------------------------------------- //
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
-
-function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-
-
-
 //----------------------------------------------- Confetti -------------------------------------------------------//
 function startConfetti(){
     const duration = 10 * 1000;
@@ -93,7 +61,6 @@ function startConfetti(){
 function stopConfetti(){
     clearInterval(intervalConfetti)
 }
-
 
 
 // -------------------------------------------------------- Timer -------------------------------------------------- //
@@ -447,73 +414,10 @@ function detectLanguage() {
 }
 
 function initializeLanguage() {
-    const savedLanguage = getCookie('language');
-    if (savedLanguage) {
-        currentLanguage = savedLanguage;
-    } else {
-        const detectedLanguage = detectLanguage();
-        if (translations[detectedLanguage]) {
-            currentLanguage = detectedLanguage;
-        }
-    }
-    document.documentElement.lang = currentLanguage;
+    document.documentElement.lang = detectedLanguage;
     translatePage();
 }
-// ----------------------- Help Modal --------------------- //
-function showHelpModal() {
-    Swal.fire({
-        title: translations[currentLanguage].helpTitle,
-        icon: 'info',
-        html: `
-            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                <button id="tab1" class="tab-button active">${translations[currentLanguage].helpBasicRules}</button>
-                <button id="tab2" class="tab-button">${translations[currentLanguage].helpAssistanceTypes}</button>
-            </div>
-            <div id="tab1Content" class="tab-content" style="display: block;">
-                <p>🧩 <strong>${translations[currentLanguage].helpBasicRules}</strong></p>
-                <ul>
-                    <li>${translations[currentLanguage].rule1}</li>
-                    <li>${translations[currentLanguage].rule2}</li>
-                    <li>${translations[currentLanguage].rule3}</li>
-                    <li>${translations[currentLanguage].rule4}</li>
-                </ul>
-            </div>
-            <div id="tab2Content" class="tab-content" style="display: none;">
-                <p>🛠️ <strong>${translations[currentLanguage].helpAssistanceTypes}</strong></p>
-                <ul>
-                    <li>${translations[currentLanguage].helpRemainingNumbersDock}</li>
-                    <li>${translations[currentLanguage].helpNotes}</li>
-                    <li>${translations[currentLanguage].helpConflicts}</li>
-                </ul>
-            </div>
-        `,
-        preConfirm: () => {
-            soundClick.play();
-            if('vibrate' in navigator)
-                navigator.vibrate(200);
-            return true;
-        },
-        showCancelButton: false,
-        confirmButtonText: `<i class="fas fa-close"></i> ${translations[currentLanguage].close}`,
-        didOpen: () => {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    soundClick.play();
-                    if('vibrate' in navigator)
-                        navigator.vibrate(200);
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.style.display = 'none');
-
-                    button.classList.add('active');
-                    document.getElementById(button.id + 'Content').style.display = 'block';
-                });
-            });
-        }
-    });
-}
 
 // --------- Modal Game-Over ----------- //
 function showGameOverModal() {
@@ -765,54 +669,6 @@ function prepareModalManualFill(){
     });
 }
 
-// --------------------- Modal Language ----------------------------------- //
-function showLanguageModal() {
-    const languages = [
-        { id: 'lang-en', lang: 'en', label: 'English' },
-        { id: 'lang-es', lang: 'es', label: 'Español' },
-        { id: 'lang-fr', lang: 'fr', label: 'Français' },
-        { id: 'lang-pt', lang: 'pt', label: 'Português' },
-        { id: 'lang-de', lang: 'de', label: 'Deutsch' },
-        { id: 'lang-it', lang: 'it', label: 'Italiano' },
-        { id: 'lang-la', lang: 'la', label: 'Latin' }
-    ];
-
-    const buttonsHtml = languages.map(lang => `
-        <button id="${lang.id}" class="lang-button">${lang.label}</button>
-    `).join('');
-
-    Swal.fire({
-        title: translations[currentLanguage].selectLanguage,
-        icon: 'question',
-        html: `
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-                ${buttonsHtml}
-            </div>
-        `,
-        showConfirmButton: false,
-        showCancelButton: false,
-        didOpen: () => {
-            languages.forEach(lang => {
-                document.getElementById(lang.id).addEventListener('click', () => {
-                    handleLanguageChange(lang.lang);
-                });
-            });
-        }
-    });
-}
-
-function handleLanguageChange(lang) {
-    soundClick.play();
-    if('vibrate' in navigator)
-        navigator.vibrate(200);
-    currentLanguage = lang;
-    setCookie('language', lang, 365);
-    document.documentElement.lang = lang;
-    translatePage();
-    Swal.close();
-}
-
-
 // ----------------- Modal Winning-Congrats!!! -------------------------- //
 function showWinningModal() {
     const timeDisplay = document.getElementById("timer-display").textContent;
@@ -929,61 +785,5 @@ document.addEventListener("DOMContentLoaded", () => {
     generateInitialSudoku();
     startSudokuAnimation();
 
-    document.getElementById('help-button').addEventListener('click', () => {showHelpModal(); soundClick.play();});
-    document.getElementById('surrender-button').addEventListener('click', () => {
-        soundClick.play();
-        if('vibrate' in navigator)
-            navigator.vibrate(200);
-        showGameOverModal();
-    });
-
-    // --------------------------------------- Surrender Button Functionality ------------------------------------------- //
-    document.getElementById('surrender-button').addEventListener('click', () => {
-        soundClick.play();
-        if('vibrate' in navigator)
-            navigator.vibrate(200);
-        Swal.fire({
-            title: translations[currentLanguage].surrenderTitle,
-            text: translations[currentLanguage].surrenderText,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: `<i class="fas fa-flag"></i> ${translations[currentLanguage].surrenderConfirm}`,
-            cancelButtonText: `<i class="fas fa-times"></i> ${translations[currentLanguage].surrenderCancel}`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                soundClick.play();
-                if('vibrate' in navigator)
-                    navigator.vibrate(200);
-                showGameOverModal();
-            }
-        });
-    });
-
-    const buttonGroup = document.getElementById('button-group');
-    const hintIndicator = document.getElementById('hint-indicator');
-
-    hintIndicator.addEventListener('click', () => {
-        if('vibrate' in navigator)
-            navigator.vibrate(200);
-        buttonGroup.classList.toggle('visible');
-        hintIndicator.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!buttonGroup.contains(event.target) && event.target !== hintIndicator) {
-            buttonGroup.classList.remove('visible');
-            hintIndicator.classList.remove('hidden');
-        }
-    });
-
-
     initializeLanguage();
-    document.getElementById('language-button').addEventListener('click', () => {
-        soundClick.play();
-        if('vibrate' in navigator)
-            navigator.vibrate(200);
-        showLanguageModal();
-    });
 });
